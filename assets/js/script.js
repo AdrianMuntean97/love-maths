@@ -31,14 +31,17 @@ function runGame(gameType) {
 
     if (gameType === "addition") {
         displayAdditionQuestion(num1, num2);
+    } else if (gameType === "multiply") {
+        displayMultiplyQuestion(num1, num2);
     } else {
         alert(`Unknown game type: ${gameType}`);
         throw `Unknown game type: ${gameType}. Aborting!`;
     }
 
 }
+
 /**
- * Checks the answer against the first element in 
+ * Checks the answer against the first element in
  * the returned calculateCorrectAnswer array
  */
 function checkAnswer() {
@@ -47,19 +50,20 @@ function checkAnswer() {
     let calculatedAnswer = calculateCorrectAnswer();
     let isCorrect = userAnswer === calculatedAnswer[0];
 
-    if(isCorrect) {
-        alert(`Hey! You got it right! :D`);
+    if (isCorrect) {
+        alert("Hey! You got it right! :D");
         incrementScore();
     } else {
-        alert(`Awww.... You answerd ${userAnswer}. The correct answer was ${calculatedAnswer[0]}!`)
+        alert(`Awwww.... you answered ${userAnswer}. The correct answer was ${calculatedAnswer[0]}!`);
         incrementWrongAnswer();
     }
 
     runGame(calculatedAnswer[1]);
+
 }
 
 /**
- * Gets the operands (the numbers) and the operator (plus,minus ets)
+ * Gets the operands (the numbers) and the operator (plus, minus etc)
  * directly from the dom, and returns the correct answer.
  */
 function calculateCorrectAnswer() {
@@ -68,12 +72,15 @@ function calculateCorrectAnswer() {
     let operand2 = parseInt(document.getElementById('operand2').innerText);
     let operator = document.getElementById("operator").innerText;
 
-    if(operator === "+") {
+    if (operator === "+") {
         return [operand1 + operand2, "addition"];
+    } else if (operator === "x") {
+        return [operand1 * operand2, "multiply"];
     } else {
         alert(`Unimplemented operator ${operator}`);
-        throw `Unimplemented opetaor ${operator}. Aborting!`;
+        throw `Unimplemented operator ${operator}. Aborting!`;
     }
+
 }
 
 /**
@@ -93,7 +100,7 @@ function incrementWrongAnswer() {
 
     let oldScore = parseInt(document.getElementById("incorrect").innerText);
     document.getElementById("incorrect").innerText = ++oldScore;
-
+    
 }
 
 function displayAdditionQuestion(operand1, operand2) {
@@ -108,6 +115,10 @@ function displaySubtractQuestion() {
 
 }
 
-function displayMultiplyQuestion() {
-    
+function displayMultiplyQuestion(operand1, operand2) {
+
+    document.getElementById('operand1').textContent = operand1;
+    document.getElementById('operand2').textContent = operand2;
+    document.getElementById('operator').textContent = "x";
+
 }
